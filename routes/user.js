@@ -93,6 +93,7 @@ router.post('/login', (req, res) => {
                     role: results[0].role
                 }
                 const accessToken = jwt.sign(response, process.env.ACCESS_TOKEN, {expiresIn: '2h'})
+                console.log('Token: ', accessToken)
                 return res.status(200).json({token: accessToken})
             }
             else{
