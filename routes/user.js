@@ -4,7 +4,8 @@ const connection = require('../connection')
 const router = express.Router()
 const jwt = require('jsonwebtoken')
 require('dotenv').config()
-
+var auth = require('../services/authentication')
+var checkRole = require('../services/checkRole')
 
 router.post('/signup',(req, res)=>{
     let user = req.body
@@ -111,6 +112,11 @@ router.post('/login', (req, res) => {
 router.get('/checkToken', (req, res) => {
     return res.status(200).json({message:'true'})
 })
+
+
+
+
+
 
 
 
