@@ -114,7 +114,36 @@ router.get('/checkToken', (req, res) => {
 })
 
 
+router.post('/changePassword', (req, res) => {
+    const user  = req.body
+    var query = "select * from user where email=? and password=?"
+    connection.query(query, [user.email, user.oldPassword], (err, results) => {
+        if(!err){
+            if(results.length <= 0){
+                return res.status(400).json({message: 'Incorrect email/password'})
+            }
+            else if(results[0].password == user.oldPassword){
+                query = "update user set password=? where email=?"
+                connection.query(query, [user.newPassword, user.email], (err, results) => {
+                    if(!err){
+                        return res.status(200).json({message:'Password updated Successfully.'})
+                    }
+                    else{
+                        return res.status(500).json(err)
+                    }
+                })
+            }
+            else{
+                return res.status(400).json({message: 'Something Went Wrong. Please try later.'})
+            }
 
+        }
+        
+        else{
+            return res.status(500).json(err)
+        }
+    })
+})
 
 
 
