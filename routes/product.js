@@ -20,7 +20,7 @@ router.post('/add',auth.authenticateToken, checkRole.checkRole ,(req, res)=>{
 
 
 router.get('/get',auth.authenticateToken, (req, res, next) => {
-    var query = "select p.id, p.name, p.description, p.price, p.status, c.id as catergoryId, c.name as categoryName FROM product as p INNER JOIN category as c p.categoryId = c.id"
+    var query = "select p.id,p.name,p.description,p.price,p.status,c.id as catergoryId, c.name as categoryName FROM product as p INNER JOIN category as c where p.categoryId = c.id"
     connection.query(query, (err, results) => {
         if(!err){
             return res.status(200).json(results)
@@ -77,7 +77,7 @@ router.patch('/update', auth.authenticateToken, checkRole.checkRole, (req, res, 
 })
 
 
-router.delete('/delete/id', auth.authenticateToken, checkRole.checkRole,(req, res, next) => {
+router.delete('/delete/:id', auth.authenticateToken, checkRole.checkRole,(req, res, next) => {
     const id = req.params.id
     query = "delete from product where id=?"
     connection.query(query, [id], (err, results)=>{
