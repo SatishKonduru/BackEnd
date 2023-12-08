@@ -86,7 +86,7 @@ router.post('/getPdf', auth.authenticateToken, (req, res)=>{
     }
 })
 
-router.get('/getBill', auth.authenticateToken,(req, res)=> {
+router.get('/getBills', auth.authenticateToken,(req, res)=> { 
     var query = "select * from bill order by id DESC";
     connection.query(query, (err, results) => {
         if(!err){
